@@ -1,0 +1,15 @@
+{
+  "network": {
+    "name": "zkSync Era Testnet",
+    "rpcUrl": "https://testnet.era.zksync.dev",
+    "chainId": 280
+  },
+  "contracts": {
+    "scoreVerifier": "0xYourScoreVerifierAddress",
+    "paymaster": "0xYourPaymasterAddress"
+  },
+  "prover": {
+    "url": "https://prover.zkSync.io",
+    "apiKey": "YOUR_PROVER_API_KEY"
+  }
+} 

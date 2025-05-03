@@ -1,0 +1,92 @@
+.botellas-bg {
+  background: linear-gradient(135deg, #fffde7 0%, #ffe0b2 100%);
+  border-radius: 20px;
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  text-align: center;
+}
+
+.botellas-pyramid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-end;
+  min-height: 180px;
+  margin-bottom: 1.5rem;
+  gap: 0.5rem;
+}
+
+.botella {
+  width: 48px;
+  height: 60px;
+  background: linear-gradient(135deg, #4fc3f7 60%, #81d4fa 100%);
+  border: 3px solid #1976d2;
+  border-radius: 12px 12px 8px 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 2px 8px #1976d2aa;
+  position: relative;
+  animation: popin 0.3s;
+}
+
+.botella span {
+  background: #ffb300;
+  color: #1b5e20;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 1rem;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@keyframes popin {
+  0% { transform: scale(0.7); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.botellas-btn {
+  background: linear-gradient(135deg, #ffb300, #ff9800);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px #ff9800aa;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.botellas-btn:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.botellas-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff9800, #ffb300);
+  transform: scale(1.05);
+}
+
+.botellas-score {
+  margin-top: 1.2rem;
+  font-size: 1.3rem;
+  color: #388e3c;
+  font-weight: bold;
+}
+
+.botellas-msg {
+  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: #c41e3a;
+  font-weight: bold;
+} 

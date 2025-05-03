@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="boothGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff8e8e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Base del puesto -->
+  <rect x="20" y="40" width="160" height="140" rx="10" fill="url(#boothGradient)" />
+  
+  <!-- Techo -->
+  <path d="M20,40 L100,20 L180,40" fill="#ff8e8e" />
+  
+  <!-- Canicas -->
+  <circle cx="50" cy="100" r="15" fill="#ffd700" />
+  <circle cx="100" cy="100" r="15" fill="#ff4500" />
+  <circle cx="150" cy="100" r="15" fill="#00ff00" />
+  
+  <!-- Letrero -->
+  <rect x="60" y="60" width="80" height="20" rx="5" fill="white" />
+  <text x="100" y="75" font-family="Arial" font-size="12" text-anchor="middle" fill="#333">Canicas</text>
+</svg> 

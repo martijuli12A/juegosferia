@@ -1,0 +1,53 @@
+.zk-auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.zk-auth-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.connect-button {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.connect-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.connect-button:disabled {
+  background: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.error {
+  color: #ff4444;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background: #ffeeee;
+  border-radius: 4px;
+}
+
+.connected {
+  color: #4CAF50;
+  font-weight: bold;
+  padding: 1rem;
+  background: #f0fff0;
+  border-radius: 4px;
+  margin-top: 1rem;
+} 

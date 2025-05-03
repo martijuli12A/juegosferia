@@ -1,92 +1,120 @@
-import React, { useEffect, useState } from 'react';
-import GameTemplate from '../GameTemplate';
-import Phaser from 'phaser';
+import React, { useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import './CanicasGame.css';
 
-const CanicasGame = () => {
-  const [score, setScore] = useState(0);
-  const [gameInstance, setGameInstance] = useState(null);
+const CanicasGame = ({ contract, account }) => {
+  const [marblesInCircle, setMarblesInCircle] = useState(1);
+  const [betAmount, setBetAmount] = useState('0.01');
+  const [gameStatus, setGameStatus] = useState('');
+  const [playerBalance, setPlayerBalance] = useState('0');
+  const [loading, setLoading] = useState(false);
 
-  const preload = function() {
-    this.load.image('background', '/assets/canicas/background.png');
-    this.load.image('marble', '/assets/canicas/marble.png');
-    this.load.image('hole', '/assets/canicas/hole.png');
+  useEffect(() => {
+    if (contract && account) {
+      loadPlayerBalance();
+    }
+  }, [contract, account]);
+
+  const loadPlayerBalance = async () => {
+    try {
+      const balance = await contract.getPlayerBalance();
+      setPlayerBalance(ethers.utils.formatEther(balance));
+    } catch (error) {
+      console.error('Error loading balance:', error);
+    }
   };
 
-  const create = function() {
-    // Configuración del fondo
-    this.add.image(this.cameras.main.width / 2, this.cameras.main.height / 2, 'background')
-      .setDisplaySize(this.cameras.main.width, this.cameras.main.height);
-
-    // Crear hoyos
-    const holes = [];
-    const holePositions = [
-      { x: 0.2, y: 0.2 },
-      { x: 0.8, y: 0.2 },
-      { x: 0.5, y: 0.5 },
-      { x: 0.2, y: 0.8 },
-      { x: 0.8, y: 0.8 }
-    ];
-
-    holePositions.forEach(pos => {
-      const hole = this.add.image(
-        this.cameras.main.width * pos.x,
-        this.cameras.main.height * pos.y,
-        'hole'
-      ).setScale(0.5);
-      holes.push(hole);
-    });
-
-    // Crear canica del jugador
-    const marble = this.add.image(
-      this.cameras.main.width / 2,
-      this.cameras.main.height * 0.9,
-      'marble'
-    ).setScale(0.3);
-
-    // Configurar física
-    this.physics.add.existing(marble);
-    marble.body.setCollideWorldBounds(true);
-    marble.body.setBounce(0.7);
-
-    // Configurar controles
-    this.input.on('pointerdown', (pointer) => {
-      const angle = Phaser.Math.Angle.Between(
-        marble.x, marble.y,
-        pointer.x, pointer.y
-      );
+  const startGame = async () => {
+    try {
+      setLoading(true);
+      setGameStatus('Iniciando juego...');
       
-      const force = 300;
-      marble.body.setVelocity(
-        Math.cos(angle) * force,
-        Math.sin(angle) * force
-      );
-    });
-
-    // Detectar colisiones con hoyos
-    this.physics.add.overlap(marble, holes, (marble, hole) => {
-      if (marble.body.velocity.length() < 50) {
-        marble.x = this.cameras.main.width / 2;
-        marble.y = this.cameras.main.height * 0.9;
-        marble.body.setVelocity(0, 0);
-        setScore(prevScore => prevScore + 10);
-      }
-    });
+      const tx = await contract.startGame(marblesInCircle, {
+        value: ethers.utils.parseEther(betAmount)
+      });
+      
+      await tx.wait();
+      setGameStatus('Juego iniciado! Esperando resultado...');
+      
+      // Listen for game result
+      contract.on('GameResult', (gameId, player, won, prize) => {
+        if (player.toLowerCase() === account.toLowerCase()) {
+          setGameStatus(won ? '¡Ganaste!' : 'Perdiste...');
+          loadPlayerBalance();
+        }
+      });
+    } catch (error) {
+      console.error('Error starting game:', error);
+      setGameStatus('Error al iniciar el juego');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const update = function() {
-    // Lógica de actualización del juego
+  const withdrawBalance = async () => {
+    try {
+      setLoading(true);
+      const tx = await contract.withdrawBalance();
+      await tx.wait();
+      setGameStatus('Balance retirado exitosamente');
+      loadPlayerBalance();
+    } catch (error) {
+      console.error('Error withdrawing balance:', error);
+      setGameStatus('Error al retirar balance');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <GameTemplate
-      gameId="canicas"
-      title="Juego de Canicas"
-      maxScore={50}
-      onGameComplete={() => console.log('Juego completado!')}
-      preload={preload}
-      create={create}
-      update={update}
-    />
+    <div className="canicas-game">
+      <h2>Juego de Canicas</h2>
+      
+      <div className="game-info">
+        <p>Balance: {playerBalance} ETH</p>
+        <p>Estado: {gameStatus}</p>
+      </div>
+
+      <div className="game-controls">
+        <div className="input-group">
+          <label>Número de canicas (1-10):</label>
+          <input
+            type="number"
+            min="1"
+            max="10"
+            value={marblesInCircle}
+            onChange={(e) => setMarblesInCircle(parseInt(e.target.value))}
+          />
+        </div>
+
+        <div className="input-group">
+          <label>Apuesta (ETH):</label>
+          <input
+            type="number"
+            min="0.01"
+            step="0.01"
+            value={betAmount}
+            onChange={(e) => setBetAmount(e.target.value)}
+          />
+        </div>
+
+        <button
+          onClick={startGame}
+          disabled={loading || !account}
+          className="play-button"
+        >
+          {loading ? 'Cargando...' : 'Jugar'}
+        </button>
+
+        <button
+          onClick={withdrawBalance}
+          disabled={loading || !account || playerBalance === '0'}
+          className="withdraw-button"
+        >
+          Retirar Balance
+        </button>
+      </div>
+    </div>
   );
 };
 
