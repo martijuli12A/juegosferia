@@ -5,6 +5,7 @@ import FairInterface from './components/FairInterface';
 import CanicasGame from './components/games/CanicasGame';
 import TiroAlBlancoGame from './components/games/TiroAlBlancoGame';
 import FutbolGame from './components/games/FutbolGame';
+import PescaGame from './components/games/PescaGame';
 import './App.css';
 
 function App() {
@@ -64,6 +65,16 @@ function App() {
             element={
               isConnected ? (
                 <FutbolGame />
+              ) : (
+                <Navigate to="/" replace />
+              )
+            }
+          />
+          <Route
+            path="/game/pesca"
+            element={
+              isConnected ? (
+                <PescaGame />
               ) : (
                 <Navigate to="/" replace />
               )
