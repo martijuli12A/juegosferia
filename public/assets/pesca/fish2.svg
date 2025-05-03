@@ -1,26 +1,6 @@
-<svg width="50" height="30" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="rareFishGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#FF00FF;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#9400D3;stop-opacity:1" />
-    </linearGradient>
-  </defs>
-  
-  <!-- Cuerpo del pez -->
-  <ellipse cx="25" cy="15" rx="20" ry="10" fill="url(#rareFishGradient)" />
-  
-  <!-- Cola -->
-  <path d="M5,15 L0,10 L0,20 Z" fill="url(#rareFishGradient)" />
-  
-  <!-- Ojo -->
-  <circle cx="35" cy="12" r="2" fill="white" />
-  <circle cx="35" cy="12" r="1" fill="black" />
-  
-  <!-- Aletas -->
-  <path d="M20,5 L15,0 L15,10 Z" fill="url(#rareFishGradient)" />
-  <path d="M20,25 L15,20 L15,30 Z" fill="url(#rareFishGradient)" />
-  
-  <!-- Estrellas -->
-  <path d="M10,5 L12,8 L15,8 L13,11 L14,15 L10,13 L6,15 L7,11 L5,8 L8,8 Z" fill="gold" />
-  <path d="M40,20 L42,23 L45,23 L43,26 L44,30 L40,28 L36,30 L37,26 L35,23 L38,23 Z" fill="gold" />
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50" height="30" viewBox="0 0 50 30" xmlns="http://www.w3.org/2000/svg">
+  <path d="M5,15 L45,5 L45,25 Z" fill="#2196F3"/>
+  <circle cx="10" cy="15" r="5" fill="#FFFFFF"/>
+  <circle cx="10" cy="15" r="2" fill="#000000"/>
 </svg> 

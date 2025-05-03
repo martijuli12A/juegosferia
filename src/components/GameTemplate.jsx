@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AztecCoin from './AztecCoin';
+import Phaser from 'phaser';
 
 const GameTemplate = ({ gameId, title, maxScore, onGameComplete, preload, create, update }) => {
   const navigate = useNavigate();

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import GameTemplate from '../GameTemplate';
+import Phaser from 'phaser';
 
 const CanicasGame = () => {
   const [score, setScore] = useState(0);
